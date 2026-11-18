@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.vite/
+*.log
+review/smoke/
+review/frames/
+.skeleton-ready
+.build/
+tests/.out/
+.preview-ready

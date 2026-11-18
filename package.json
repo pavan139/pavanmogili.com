@@ -1,0 +1,28 @@
+{
+  "name": "pavanmogili-site",
+  "private": true,
+  "version": "3.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --configLoader runner",
+    "corpus": "node scripts/build-corpus.mjs",
+    "build": "node scripts/build-corpus.mjs && vite build --configLoader runner && node scripts/postbuild.mjs",
+    "preview": "vite preview --configLoader runner --port 4174 --strictPort",
+    "serve": "node tests/serve.mjs --port 4174",
+    "typecheck": "tsc --noEmit",
+    "check": "node tests/check.mjs",
+    "check:quick": "node tests/check.mjs --quick",
+    "test:smoke": "node --test --test-concurrency=1 --test-reporter=spec tests/e2e/*.test.mjs",
+    "budgets": "node scripts/postbuild.mjs"
+  },
+  "dependencies": {
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.187.0",
+    "html-validate": "^11.21.1",
+    "playwright-core": "^1.65.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}

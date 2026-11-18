@@ -1,0 +1,36 @@
+{
+  "$note": "Known findings in files PERF does not own, tolerated by `npm run check` until the owner fixes them. Each entry needs an owner and a note. The check prints a reminder when an entry no longer matches, so remove it then.",
+  "html-validate": [],
+  "allocation": [
+    {
+      "site": "src/feel/view.ts",
+      "owner": "FEEL",
+      "note": "camera rig update() allocates about 530 B per frame (profile: update src/feel/view.ts:121)"
+    },
+    {
+      "site": "src/feel/hud.ts",
+      "owner": "FEEL",
+      "note": "renderHint() builds a template-string key and calls matchMedia() every frame; cache the MediaQueryList and compare fields"
+    },
+    {
+      "site": "src/feel/math.ts",
+      "owner": "FEEL",
+      "note": "smoothDamp allocates per call (about 80 B per frame)"
+    },
+    {
+      "site": "src/feel/sound.ts",
+      "owner": "FEEL",
+      "note": "impact() allocates per contact (about 55 B per frame while rolling)"
+    },
+    {
+      "site": "src/world/exhibits/quorum.ts",
+      "owner": "WORLD",
+      "note": "quorum exhibit update() allocates about 245 B per frame"
+    },
+    {
+      "site": "src/engine/bus.ts",
+      "owner": "LEAD",
+      "note": "emit(event, ...payload) allocates the rest array on every call; take the payload as a plain parameter"
+    }
+  ]
+}

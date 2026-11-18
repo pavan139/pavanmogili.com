@@ -1,0 +1,9 @@
+@font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-v1.woff2') format('woff2'); font-weight: 400 700; font-stretch: 75% 100%; font-display: swap; }
+html { background: #f3f3f1; color: #1c1e21; color-scheme: light; }
+body { margin: 0; min-height: 100vh; display: grid; place-items: center; font: 400 1.0625rem/1.6 'Instrument Sans', system-ui, sans-serif; }
+main { padding: 32px; max-width: 32rem; }
+.code { font-weight: 700; font-stretch: 80%; font-size: clamp(4rem, 16vw, 7rem); line-height: 1; color: #2747d9; margin: 0 0 12px; }
+h1 { font-weight: 700; font-stretch: 86%; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.1; margin: 0 0 12px; }
+p { color: #4f555c; }
+a { color: #2747d9; font-weight: 600; }
+a:focus-visible { outline: 2px solid #2747d9; outline-offset: 3px; }

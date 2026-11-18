@@ -1,0 +1,12 @@
+{
+  "name": "Pavan Reddy Mogili",
+  "short_name": "Pavan Mogili",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#f3f3f1",
+  "theme_color": "#f3f3f1",
+  "icons": [
+    { "src": "./favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "./apple-touch-icon.png", "type": "image/png", "sizes": "180x180" }
+  ]
+}

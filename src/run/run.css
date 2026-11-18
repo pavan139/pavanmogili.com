@@ -1,0 +1,491 @@
+/* The request run: panel, pinned labels and controls. Text is HTML, 15px or larger. */
+html.world .world-layer canvas {
+  position: absolute;
+  inset: 0;
+  touch-action: none;
+  cursor: grab;
+}
+html.world .world-layer canvas:active {
+  cursor: grabbing;
+}
+html.world-ready .world-layer.is-cut canvas {
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+.world-layer.is-cut .run-tags {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.run-panel,
+.run-tags {
+  transition: opacity 0.5s ease 0.3s;
+}
+html.world:not(.is-entered) .run-panel,
+html.world:not(.is-entered) .run-tags {
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+}
+
+.run-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  /* as tall as its text needs, up to a little under half the screen */
+  height: auto;
+  max-height: min(46svh, 420px);
+  padding: 0 18px calc(12px + env(safe-area-inset-bottom));
+  background: #fcfcfb;
+  border-top: 1px solid var(--rule);
+  border-radius: 18px 18px 0 0;
+  box-shadow: 0 -18px 40px -24px rgba(28, 30, 33, 0.35);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  touch-action: pan-y;
+}
+.run-progress {
+  flex: none;
+  height: 3px;
+  margin: 0 -18px;
+  background: var(--rule);
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+}
+.run-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 0.6s ease;
+}
+.run-text {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  /* fade the last lines when there is more to scroll to */
+  mask-image: linear-gradient(#000 calc(100% - 22px), transparent);
+  padding-bottom: 18px;
+  overscroll-behavior: contain;
+  padding-top: 14px;
+  -webkit-overflow-scrolling: touch;
+}
+.run-text.is-in > * {
+  animation: run-in 0.45s ease both;
+}
+@keyframes run-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.run-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.run-kicker {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.run-count {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+.run-title {
+  margin: 0 0 8px;
+  font-size: 1.4375rem;
+  line-height: 1.15;
+  font-weight: 700;
+  font-stretch: 90%;
+  letter-spacing: -0.012em;
+}
+.run-body {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.run-built {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px 10px 10px 4px;
+  background: #fff;
+}
+.run-built p {
+  margin: 0;
+}
+.run-built-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-size: 1.0625rem;
+}
+.run-built-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.run-line {
+  display: none;
+  margin-top: 4px !important;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+.run-figure {
+  margin-top: 8px !important;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+.run-figure strong {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 2px;
+}
+.run-caveat {
+  margin-top: 6px !important;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.run-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin-top: 8px !important;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.run-links a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+.run-end {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.run-end[hidden],
+.run-built[hidden] {
+  display: none;
+}
+.run-nav {
+  flex: none;
+  display: flex;
+  gap: 10px;
+  padding-top: 10px;
+}
+.run-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--rule);
+  border-radius: 23px;
+  background: #fff;
+  color: var(--ink);
+  font: 600 1rem/1 var(--font-ui);
+  text-decoration: none;
+  cursor: pointer;
+}
+.run-btn:hover {
+  border-color: var(--ink);
+}
+.run-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.run-next {
+  flex: 1;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.run-next:hover {
+  border-color: var(--ink);
+}
+.run-nav .run-next::after {
+  content: '→';
+  margin-left: 8px;
+}
+.run-hint,
+.run-rail {
+  display: none;
+}
+
+.run-tags {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.run-tag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 5px 9px;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(28, 30, 33, 0.14),
+    0 6px 14px -6px rgba(28, 30, 33, 0.4);
+  color: var(--ink);
+  font: 600 0.875rem/1.2 var(--font-ui);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease;
+  will-change: transform;
+}
+.run-tag.is-on {
+  opacity: 1;
+}
+.run-tag-up {
+  margin-top: -12px;
+}
+.run-tag-down {
+  margin-top: 12px;
+}
+.run-tag::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  height: 10px;
+  margin-left: -1px;
+  background: var(--ink);
+  opacity: 0.55;
+}
+.run-tag-up::after {
+  top: 100%;
+}
+.run-tag-down::after {
+  bottom: 100%;
+}
+
+/* wide screens: the panel is a card on the left, the model has the rest */
+@media (min-width: 900px) and (min-aspect-ratio: 5/4) {
+  .run-panel {
+    left: 28px;
+    right: auto;
+    /* pinned to the top, so the heading stays put from stop to stop */
+    top: calc(var(--bar-h) + 6px);
+    bottom: auto;
+    width: 408px;
+    height: auto;
+    max-height: calc(100dvh - var(--bar-h) - 30px);
+    padding: 0 24px 18px;
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    box-shadow: 0 30px 60px -30px rgba(28, 30, 33, 0.4);
+  }
+  .run-progress {
+    margin: 0 -24px;
+  }
+  .run-text {
+    padding-top: 20px;
+  }
+  .run-title {
+    font-size: 1.75rem;
+  }
+  .run-line {
+    display: block;
+  }
+  .run-body {
+    font-size: 1.0625rem;
+  }
+  .run-hint {
+    display: block;
+    margin: 12px 0 0;
+    font-size: 0.8125rem;
+    color: var(--ink-2);
+  }
+  .run-rail {
+    position: absolute;
+    /* along the top of the model's side of the screen, clear of the lane and its labels */
+    left: 452px;
+    right: 28px;
+    top: calc(var(--bar-h) + 6px);
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 16px;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 9px 20px 7px;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    background: #fcfcfb;
+    box-shadow: 0 16px 34px -22px rgba(28, 30, 33, 0.45);
+    font-family: var(--font-ui);
+    transition: opacity 0.5s ease 0.3s;
+  }
+  html.world:not(.is-entered) .run-rail {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .run-rail-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .run-rail-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--ink-2);
+    opacity: 0.75;
+    transition: color 0.3s, opacity 0.3s;
+  }
+  .run-rail-group.is-on .run-rail-name {
+    color: var(--accent);
+    opacity: 1;
+  }
+  .run-rail-dots {
+    display: flex;
+    gap: 2px;
+  }
+  .run-rail-dot {
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .run-rail-dot::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: auto;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink-2);
+    transition: transform 0.25s ease, background 0.25s, border-color 0.25s;
+  }
+  .run-rail-dot:hover::before {
+    transform: scale(1.35);
+    border-color: var(--ink);
+  }
+  .run-rail-dot.is-done::before {
+    background: var(--ink-2);
+  }
+  .run-rail-dot.is-on::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.5);
+  }
+  .run-tag {
+    font-size: 0.9375rem;
+  }
+}
+@media (max-height: 520px) {
+  .run-panel {
+    height: 58svh;
+  }
+}
+
+/* the intro card leaves the model in view: at the bottom on phones, on the left on wide screens */
+html.world .intro {
+  place-items: end center;
+  padding: calc(var(--bar-h) + 12px) 12px max(12px, env(safe-area-inset-bottom));
+}
+html.world .intro-card {
+  border-radius: 18px;
+}
+@media (min-width: 900px) and (min-aspect-ratio: 5/4) {
+  html.world .intro {
+    place-items: center start;
+    padding-left: 28px;
+  }
+  html.world .intro-card {
+    width: 27rem;
+  }
+}
+
+/* over the model the name needs its own ground, like the view button beside it */
+html.world .bar-name {
+  padding: 9px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 19px;
+  background: #fcfcfb;
+  line-height: 1.2;
+}
+html.world .bar-role {
+  display: none;
+}
+
+/* the loading line has done its job once the table is ready */
+html.world-ready .intro-progress {
+  visibility: hidden;
+}
+/* keyboard focus is always visible */
+.run-btn:focus-visible,
+.run-rail-dot:focus-visible,
+.run-rail-map:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+@media (min-width: 900px) and (min-aspect-ratio: 5/4) {
+  .run-rail-map {
+    align-self: center;
+    min-height: 32px;
+    margin-left: 6px;
+    padding: 0 14px;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    background: #fff;
+    color: var(--ink);
+    font: 600 0.8125rem/1 var(--font-ui);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .run-rail-map:hover,
+  .run-rail-map[aria-pressed='true'] {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  /* the stop's title, at once, under its dot */
+  .run-rail-dot {
+    position: relative;
+  }
+  .run-rail-dot:hover::after,
+  .run-rail-dot:focus-visible::after {
+    content: attr(data-tip);
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 10px;
+    border-radius: 7px;
+    background: var(--ink);
+    color: #fff;
+    font: 600 0.8125rem/1.2 var(--font-ui);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 4;
+  }
+}

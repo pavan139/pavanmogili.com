@@ -1,0 +1,39 @@
+{
+  "$schema-note": "Byte budgets for dist/, checked by scripts/postbuild.mjs after every build. Values are KB of Brotli (1 KB = 1024 bytes; woff2, webp and wasm are counted as served). Groups come from the module graph, so splitting chunks differently does not change what is measured. Raise a number only with a reason in the commit message.",
+  "html": 25,
+  "classicCss": 12,
+  "entryJs": 10,
+  "preloadedFonts": 60,
+  "classicFirstPaint": 90,
+  "worldJs": 200,
+  "physics": 560,
+  "worldData": 1000,
+  "searchJs": 60,
+  "otherChunk": 30,
+  "totalWorld": 1700,
+  "distFiles": 60,
+  "distMB": 8,
+  "$physics-note": "Rapier 0.19.3 SIMD: 1.62 MB wasm, 516 KB at Brotli 9 (about 445 KB at 11) plus 13 KB of worker JS. 0.21 is twice the size (soft bodies), so stay on 0.19 unless a needed fix lands.",
+  "runtime": {
+    "$note": "Checked by scripts/profile.mjs --ci: 1500 warm-up frames, then 600 measured frames on the capture clock with the replay path. CPU ms per frame (scaled by --throttle); allocation per frame overall and in our own code (src/**, named through source maps); major GCs; forced layouts and style recalcs per frame; no program, texture or geometry created after reveal; renderer counters.",
+    "cpuP95Ms": 6,
+    "allocBytesPerFrame": 8192,
+    "ownAllocBytesPerFrame": 512,
+    "majorGC": null,
+    "layoutsPerFrame": 0.01,
+    "styleRecalcsPerFrame": 0.05,
+    "longTasks": 0,
+    "allocKBps": 20,
+    "drawCalls": 64,
+    "triangles": 400000,
+    "programs": 12,
+    "textures": 16,
+    "$targets": "Measured on the skeleton (capture clock, warm JIT): 6.0 KB/frame in total, of which three.js uniform uploads and frustum math are 5.5 KB and our src/** code 0.28 KB (mostly doubles boxed at call boundaries in the loop). Ceilings catch regressions; the targets are src/** under 128 B/frame and no major GC in 60 s on a device. Major GCs are reported, not gated, on this shared CI box."
+  },
+  "runtimeSoftwareGl": {
+    "$note": "Overrides for --realtime runs on software GL, where frames take 50-200 ms: every frame is a long task and idle-time GCs run between frames. Capture-clock runs (the default) need no overrides.",
+    "majorGC": null,
+    "longTasks": null,
+    "allocKBps": null
+  }
+}
